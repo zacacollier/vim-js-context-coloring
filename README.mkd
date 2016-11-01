@@ -47,7 +47,8 @@ your choice. Here is a summary of the commands available:
 
 * The plugin relies on [NodeJS](http://nodejs.org/) being installed, preferably > 0.10.
 
-* UNIX-like environment. The command line script which runs jslint in Node to obtain the coloring data 
+* UNIX-like environment. 
+The command line script which runs jslint in Node to obtain the coloring data, and therefore 
 requires a Unix-like environment to work. This means it's probably not going to work
 on Windows, unless inside Cygwin or something like that. 
 
@@ -61,15 +62,15 @@ on Windows, unless inside Cygwin or something like that.
 
 1. Clone the repo from GitHub into your 'bundle' directory:
 
-    git clone git@github.com:bigfish/vim-js-context-coloring.git
+    `git clone git@github.com:bigfish/vim-js-context-coloring.git ~/.vim/bundle/vim-js-context-coloring`
 
 2. Run this command in the repo dir to install required node modules:
 
-    npm install
+    `npm install`
 
 3. Install docs (in Vim):
 
-    :Helptags
+    `:Helptags`
 
 ### Using NeoBundle.
 
@@ -110,10 +111,10 @@ Then you can make modifications to the highlight groups in the file as you wish.
 See ':help highlight-args' or look at other colorschemes for guidance. 
 You may add additional levels if you wish. 
 
-The special syntax group 'JSCC_UndeclaredGlobal' targets undeclared global
+The special syntax group `JSCC_UndeclaredGlobal` targets undeclared global
 variables, in order to distinguish them from global variables which were
 declared in the current file. If you don't want to distinguish these, just set
-this group to the same highlighting as JSCC_Level_0.
+this group to the same highlighting as `JSCC_Level_0`.
 
 You may use the [XtermColorTable](http://www.vim.org/scripts/script.php?script_id=3412) plugin to see what colors are available
 
@@ -128,15 +129,15 @@ Ubuntu (and I suspect most modern distros?) do support 256 colors by default, bu
 as the $TERM environment is set to 'xterm' by default and Vim does not think that the terminal can support 
 256 colors and does not even try. This can be remedied by adding the following line to your .bashrc:
 
-   [ -z "$TMUX" ] && export TERM=xterm-256color
+   `[ -z "$TMUX" ] && export TERM=xterm-256color`
 
-This will set the $TERM environment variable to `xterm-256colr` unless we are using tmux (which sets its own $TERM value and should allow the plugin to work).
+This will set the $TERM environment variable to `xterm-256color` unless we are using tmux (which sets its own $TERM value and should allow the plugin to work).
 
 ####Mac OS X
 
 Terminal.app does not support 256 colors in Snow Leopard and older. If you have Snow Leopard you can use iTerm2
- to enable 256 color support. If you have a newer OSX you should be OK but the $TERM variable must still be 
- set to 'xterm-256color'. Apparently this is default in Lion, and more recent versions, so that it should just work.
+ to enable 256 color support. If you have a newer version of OSX you should be OK but the $TERM variable must still be 
+ set to `xterm-256color`. Apparently this is default in Lion, and more recent versions, so it should just work.
 
 ###Comments
 
@@ -181,14 +182,14 @@ If you only want to support ES5 syntax, you can set the `g:js_context_colors_es5
 Set the `g:js_context_colors_jsx` option to 1 to support JSX (and ES6). If the file extension
 is .jsx this will be automatically turned on. 
 
-If you want JXS syntax to be used, overriding the scope colors, set
+If you want JSX syntax to be used, overriding the scope colors, set
 `g:js_context_colors_allow_jsx_syntax` to 1. The vim-jsx or equivalent syntax must be
 loaded *after* this plugin.
 
 ### Folding
 
-The foldmethod is set to syntax by default, so if you do 'zc' to close the current fold,
-it will fold the current function. ('zo' opens it again). If `g:js_context_colors_block_scope`
+The foldmethod is set to syntax by default, so if you do `zc` to close the current fold,
+it will fold the current function. (`zo` opens it again). If `g:js_context_colors_block_scope`
 is set, it will fold the current block. There is another option to automatically fold functions
 after a certain depth of nesting, which is 9 by default. The option that controls this is
 `g:js_context_colors_foldlevel`. Set to a lower number to fold sooner, or a higher to avoid folding 
@@ -212,8 +213,8 @@ to 0, in your .vimrc file.
 
 ###Mappings
 
-By default, <localleader>h is mapped to the `JSContextColor` command.
-By default, <localleader>t is mapped to the `JSContextColorToggle` command.
+By default, <localleader><kbd>h</kbd> is mapped to the `JSContextColor` command.
+By default, <localleader><kbd>t</kbd> is mapped to the `JSContextColorToggle` command.
 
 These are local to the buffer. They can be disabled by setting the `g:js_context_colors_usemaps` variable to 0.
 
@@ -221,7 +222,7 @@ These are local to the buffer. They can be disabled by setting the `g:js_context
 
 This plugin has a [Neovim](https://neovim.io/) specific version, on the 'neovim' branch.
 
-if you're new to neovim, [this](https://neovim.io/doc/user/nvim_from_vim.html) has helpful info on 
+If you're new to neovim, [this](https://neovim.io/doc/user/nvim_from_vim.html) has helpful info on 
 configuring nvim to use your existing vim config. 
 
 The advantage of the nvim fork is that the scope-analysis is done in a different thread than (n)vim,
@@ -232,28 +233,32 @@ Also, since the node code is running continually in the background, it will beco
 
 * Check out the neovim branch, and install node modules:
 
-    cd vim-js-context-colors
-    git fetch -a 
-    git checkout neovim
-    cd rplugin/node 
-    npm install
+   ```
+   cd vim-js-context-colors
+   git fetch -a 
+   git checkout neovim
+   cd rplugin/node 
+   npm install
+   ```
 
 * The neovim version of my plugin depends on the [node-host nvim plugin](https://github.com/neovim/node-host)
-So this must be installed as well (eg. using Vundle:)
+so this must be installed as well (e.g. using Vundle:)
 
+    ```
     if has('nvim')
       Plugin 'neovim/node-host'
     endif
+    ```
 
 * You also need to do `npm install` inside the node-host repo as well..
 
-* When you run nvim, you also need to do 
+* When you run nvim, you also need to run the 
 
-  :UpdateRemotePlugins
+  `:UpdateRemotePlugins`
   
 command, and then restart nvim. AFAIK, this only needs to be done the first time, or after updating the plugin.
 
-* You may sometimes notice the js code appears with default highlighting for a split second.. this is a side effect of 
+* You may sometimes notice the js code appears with default highlighting for a split second. This is a side effect of 
 the asynchronous nature of the plugin. It is more noticable on the Mac for some reason, than on Linux, and for the first file
 after starting the computer, as the node-host runtime has to startup. After that it shouldn't be noticable.
 
